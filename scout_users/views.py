@@ -34,6 +34,7 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 
     def get_object(self):
         # Return the currently logged-in user (from the request)
+        print(self.request.user.pk)
         return self.request.user
 
 

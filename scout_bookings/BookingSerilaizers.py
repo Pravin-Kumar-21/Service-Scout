@@ -1,13 +1,10 @@
 from rest_framework import serializers
 from .models import ServiceBooking
-from scout_users.models import Customer, ServiceProvider
-from scout_services.models import ScoutServices
-
 
 class ServiceBookingSerializer(serializers.ModelSerializer):
     customer_name = serializers.CharField(source='customer.user.username', read_only=True)
+    service_name_text = serializers.CharField(source='service_name.service_name', read_only=True)  # fixed field name
     provider_name = serializers.CharField(source='service_provider.user.username', read_only=True)
-    service_name = serializers.CharField(source='service.name', read_only=True)
     progress = serializers.SerializerMethodField()
 
     class Meta:
@@ -16,8 +13,10 @@ class ServiceBookingSerializer(serializers.ModelSerializer):
             'id',
             'customer',
             'customer_name',
+            'service_provider',
             'provider_name',
             'service_name',
+            'service_name_text',
             'status',
             'booking_date',
             'booking_time',
@@ -29,7 +28,12 @@ class ServiceBookingSerializer(serializers.ModelSerializer):
             'auto_cancel_time',
             'progress'
         ]
-        read_only_fields = ['created_at', 'updated_at', 'progress']
+        read_only_fields = [
+            'customer', 'service_provider',
+            'created_at', 'updated_at', 'progress',
+            'customer_name', 'provider_name', 'service_name_text'
+        ]
 
     def get_progress(self, obj):
-        return obj.progress()
+        # Using is_upcoming method from the model as progress example
+        return obj.is_upcoming()

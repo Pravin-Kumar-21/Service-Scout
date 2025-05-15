@@ -50,6 +50,10 @@ class User(AbstractUser):
     user_type = models.CharField(
       max_length=50, choices=USER_TYPE, null=True, blank=True
       )
+    
+    REQUIRED_FIELDS = [
+      "email",
+    ]
 
     def __str__(self):
         return self.email
@@ -82,7 +86,7 @@ class Customer(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'Customer Profile: {self.user.email}'
+        return f'{self.user.email}'
 
 
 class ServiceProvider(models.Model):
@@ -146,4 +150,4 @@ class ServiceProvider(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'Service Provider: {self.user.email}'
+        return f'{self.user.email}'

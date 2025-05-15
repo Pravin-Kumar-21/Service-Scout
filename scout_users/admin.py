@@ -23,6 +23,22 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
+
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "username",
+                    "email",         # <-- include email
+                    "password1",
+                    "password2",
+                ),
+            },
+        ),
+    )
+
     list_filter = UserAdmin.list_filter + (
         "user_type",
         "is_verified",
@@ -30,6 +46,7 @@ class CustomUserAdmin(UserAdmin):
         "city",
     )
     list_display = (
+        "id",
         "username",
         "first_name",
         "last_name",

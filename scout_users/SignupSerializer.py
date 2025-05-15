@@ -10,7 +10,7 @@ class CustomerSignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ('user', 'preferred_language', 'subscription_plan')
+        fields = ('id', 'user', 'preferred_language', 'subscription_plan')
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -24,7 +24,7 @@ class ServiceProviderSignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServiceProvider
-        fields = ('user', 'service_name', 'work_experience', 'service_description')
+        fields = ('id', 'user', 'service_name', 'work_experience', 'service_description')
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
